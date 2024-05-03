@@ -17,6 +17,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 
 // Register custom post type
 add_action( 'init', 'custom_blog_post_type' );
+
 function custom_blog_post_type() {
     $labels = array(
         'name' => 'Blog',
@@ -70,3 +71,4 @@ function custom_blog_scripts_styles() {
     
 }
 
+select_filter();

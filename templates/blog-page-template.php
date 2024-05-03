@@ -36,19 +36,14 @@ get_header();
 
         <section class="blog-posts bg-red-500 p-3 grid grid-cols-3 gap-3 z-10">
             <?php
-            // Query posts based on category filter
-            $args = array(
-                'post_type' => 'post',
-                'posts_per_page' => -1,
-            );
 
-            // Check if category filter is set
-            if ( isset( $_GET['category-filter'] ) && $_GET['category-filter'] != '' ) {
-                $args['category_name'] = $_GET['category-filter'];
-            }
-
+            $args = select_filter();
+            
             // The Query
             $query = new WP_Query( $args );
+
+            echo '<pre>';
+            print_r($query);exit;
 
             // The Loop
             if ( $query->have_posts() ) :

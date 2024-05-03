@@ -21,7 +21,7 @@ function create_taxonomy()
 
 function save_taxonomy($singular, $plural)
 {
-    $post_type = ['post'];
+    $post_type = ['blog_post'];
     $prefix = 'lpcpt_';
 
     $labels = array(
@@ -115,7 +115,7 @@ function seeding_taxonomies()
 
 function build_form($title, $taxonomy, $slug)
 {
-?>
+    ?>
     <section class="p-4 bg-slate-100 text-white flex flex-row justify-between items-center">
         <div id="<?=$slug?>" class="dropdown-check-list inline-block relative" tabindex="100">
             <span class="anchor relative cursor-pointer inline-block py-[5px] pr-[200px] pl-[10px] border border-orange-600 text-orange-600">
@@ -154,5 +154,53 @@ function build_form($title, $taxonomy, $slug)
                 checkList_<?=$slug?>.classList.add('visible');
         }
     </script>
-<?php
+    <?php
+}
+
+function select_filter()
+{
+    $query = $_GET;
+
+    $args = array(
+        'post_type' => 'blog_post',
+        'posts_per_page' => -1,
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'lpcpt_tema',
+                'field' => 'slug',
+                'terms' => 'janeiro'
+            )
+        )
+    );
+    
+    // echo "<pre>";print_r($args);exit;
+
+
+    return $args;
+
+    if(isset($query['territorio'])) {
+        $territorio = $query['territorio'];
+        $arg = '';
+        echo "<pre>";
+        print_r($territorio);
+        
+        exit;
+    } else {
+        echo 'Nada';
+    }
+
+    // Query posts based on category filter
+    $args = array(
+        'post_type' => 'post',
+        'posts_per_page' => -1,
+    );
+
+    // Check if category filter is set
+    if ( isset( $_GET['category-filter'] ) && $_GET['category-filter'] != '' ) {
+        $args['category_name'] = $_GET['category-filter'];
+    }
+
+
+    exit;
+    // die('Selector');
 }
