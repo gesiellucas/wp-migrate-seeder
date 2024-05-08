@@ -36,14 +36,9 @@ get_header();
 
         <section class="blog-posts bg-red-500 p-3 grid grid-cols-3 gap-3 z-10">
             <?php
-
-            $args = select_filter();
             
             // The Query
-            $query = new WP_Query( $args );
-
-            echo '<pre>';
-            print_r($query);exit;
+            $query = new WP_Query( select_filter() );
 
             // The Loop
             if ( $query->have_posts() ) :

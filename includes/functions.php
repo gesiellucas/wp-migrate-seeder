@@ -16,7 +16,8 @@ function create_taxonomy()
         save_taxonomy($taxonomy[0], $taxonomy[1]);
     }
 
-    // seeding_taxonomies();
+    seeding_taxonomies();
+
 }
 
 function save_taxonomy($singular, $plural)
@@ -71,7 +72,7 @@ function lpcpt_get_taxonomy($taxonomy = null)
     return array_map(function($value){
         return $value->name ;
     }, $terms);
-    
+
 }
 
 function seeding_taxonomies()
@@ -135,7 +136,7 @@ function build_form($title, $taxonomy, $slug)
                 </li>
                 <?php endforeach; ?>
                 <li>
-                    <div class="relative inline-flex items-center justify-center py-1 px-2 m-2 overflow-hidden text-sm font-medium text-orange-600 border border-orange-600 hover:bg-orange-600 hover:text-white">
+                    <div id="button_<?=$slug?>" class="relative inline-flex items-center justify-center py-1 px-2 m-2 overflow-hidden text-sm font-medium text-orange-600 border border-orange-600 hover:bg-orange-600 hover:text-white">
                         <button class="m-0 p-0">Filtrar</button>
                     </div>
                 </li>
@@ -145,14 +146,25 @@ function build_form($title, $taxonomy, $slug)
 
     <script>
         let checkList_<?=$slug?> = document.querySelector('#<?=$slug?>');
-        
-        checkList_<?=$slug?>.querySelector('#<?=$slug?> .anchor').onclick = function(evt) {
-            console.log(checkList_<?=$slug?>.classList);
-            if (checkList_<?=$slug?>.classList.contains('visible'))
-                checkList_<?=$slug?>.classList.remove('visible');
-            else
-                checkList_<?=$slug?>.classList.add('visible');
-        }
+        let button_<?=$slug?> = document.querySelector('#button_<?=$slug?>');
+
+        checkList_<?=$slug?>
+            .querySelector('#<?=$slug?> .anchor')
+            .onclick = function(evt) {
+                if (checkList_<?=$slug?>.classList.contains('visible')) {
+                    checkList_<?=$slug?>.classList.remove('visible');
+                } else {
+                    checkList_<?=$slug?>.classList.add('visible');
+                }
+            }
+
+        button_<?=$slug?>
+            .onclick = function(evt) {
+                let checkedCheckboxes = checkList_<?=$slug?>.querySelectorAll('#<?=$slug?> input[type="checkbox"]:checked');
+
+                console.log(checkedCheckboxes);
+            }
+
     </script>
     <?php
 }
@@ -161,46 +173,30 @@ function select_filter()
 {
     $query = $_GET;
 
+    $taxonomy['relation'] = 'OR';
+
+    if(isset($query['territorio']))  {
+        array_push($taxonomy, [
+            'taxonomy' => 'lpcpt_territorio',
+            'field' => 'slug',
+            'terms' => $query['territorio']
+        ]);
+    }
+
+    if(isset($query['tema'])) {
+        array_push($taxonomy, [
+            'taxonomy' => 'lpcpt_tema',
+            'field' => 'slug',
+            'terms' => $query['tema']
+        ]);
+    }
+
     $args = array(
         'post_type' => 'blog_post',
         'posts_per_page' => -1,
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'lpcpt_tema',
-                'field' => 'slug',
-                'terms' => 'janeiro'
-            )
-        )
+        'tax_query' => $taxonomy
     );
-    
-    // echo "<pre>";print_r($args);exit;
-
 
     return $args;
 
-    if(isset($query['territorio'])) {
-        $territorio = $query['territorio'];
-        $arg = '';
-        echo "<pre>";
-        print_r($territorio);
-        
-        exit;
-    } else {
-        echo 'Nada';
-    }
-
-    // Query posts based on category filter
-    $args = array(
-        'post_type' => 'post',
-        'posts_per_page' => -1,
-    );
-
-    // Check if category filter is set
-    if ( isset( $_GET['category-filter'] ) && $_GET['category-filter'] != '' ) {
-        $args['category_name'] = $_GET['category-filter'];
-    }
-
-
-    exit;
-    // die('Selector');
 }

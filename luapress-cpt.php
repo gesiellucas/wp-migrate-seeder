@@ -12,11 +12,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'PREFIX_BASE_PATH', plugin_dir_path( __FILE__ ) );
 
-
 require plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 
 // Register custom post type
-add_action( 'init', 'custom_blog_post_type' );
+add_action( 'init', 'custom_blog_post_type', 11 );
 
 function custom_blog_post_type() {
     $labels = array(
@@ -44,7 +43,7 @@ function custom_blog_post_type() {
     register_post_type( 'blog_post', $args );
 }
 
-add_action( 'init', 'create_taxonomy', 0 );
+add_action( 'init', 'create_taxonomy', 10 );
 
 
 // Add custom page template for blog
