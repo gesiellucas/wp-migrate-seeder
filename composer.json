@@ -1,0 +1,16 @@
+{
+    "name": "gesiellucas/luapress-cpt",
+    "description": "Custom Post Type to wordpress",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gesiel Lucas",
+            "email": "gesiel.lucas.f@gmail.com"
+        }
+    ],
+    "require": {
+        "fakerphp/faker": "^1.23",
+        "danielstjules/stringy": "^3.1",
+        "pristas-peter/wp-graphql-gutenberg": "^0.4.1"
+    }
+}

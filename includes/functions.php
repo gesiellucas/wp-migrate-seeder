@@ -1,28 +1,71 @@
 <?php 
 
-function render_header()
+function lpcpt_create_article_post() 
 {
-    require PREFIX_BASE_PATH . '/templates/blog-header-template.php';
+    $labels = array(
+        'name' => 'Artigos',
+        'singular_name' => 'Artigo',
+        'menu_name' => 'Artigos',
+        'add_new' => 'Adicionar novo artigo',
+        'add_new_item' => 'Adicionar novo artigo',
+        'edit_item' => 'Editar item artigo',
+        'new_item' => 'Novo artigo',
+        'view_item' => 'Ver artigo',
+        'search_items' => 'Buscar artigos',
+        'not_found' => 'Nenhum artigo encontrado',
+        'not_found_in_trash' => 'Nenhum artigo encontrado na lixeira',
+    );
+
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'has_archive' => true,
+        'menu_icon' => 'dashicons-format-aside',
+        'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
+    );
+
+    register_post_type( LPCPT_SLUG, $args );
 }
 
-function create_taxonomy()
+function lpcpt_create_taxonomy()
 {
-    $taxonomies = [
-        ['Território', 'Territórios'],
-        ['Tema', 'Temas']
-    ];
-
-    foreach ($taxonomies as $taxonomy) {
-        save_taxonomy($taxonomy[0], $taxonomy[1]);
+    foreach (LPCPT_TAXONOMIES as $taxonomy) {
+        lpcpt_save_taxonomy($taxonomy[0], $taxonomy[1]);
     }
 
-    seeding_taxonomies();
-
+    // lpcpt_seeding_taxonomies();
 }
 
-function save_taxonomy($singular, $plural)
+function lpcpt_custom_template( $template ) 
+{  
+    if ( is_singular( LPCPT_SLUG ) ) {
+        $new_template = plugin_dir_path( __FILE__ ) . 'templates/page-template.php';
+        if ( '' !== $new_template ) {
+            return $new_template;
+        }
+    }
+    return $template;
+}
+
+function lpcpt_scripts_styles() 
 {
-    $post_type = ['blog_post'];
+    if ( is_singular( LPCPT_SLUG ) ) {
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_script( 'custom-blog-tailwind', plugins_url( 'assets/js/tailwind.js', __FILE__ ), null, '0.1.0' );
+        wp_enqueue_script( 'custom-blog-script', plugins_url( 'assets/js/custom-blog-script.js?v=1', __FILE__ ), 'jquery', '0.1.0' );
+        wp_enqueue_style( 'custom-blog-style', plugins_url( 'assets/css/custom-blog-style.css?v=1', __FILE__), null, '0.1.0' );
+    }
+    
+}
+
+function lpcpt_render_header()
+{
+    require PREFIX_BASE_PATH . 'templates/header-template.php';
+}
+
+function lpcpt_save_taxonomy($singular, $plural)
+{
+    $post_type = [LPCPT_SLUG];
     $prefix = 'lpcpt_';
 
     $labels = array(
@@ -75,101 +118,14 @@ function lpcpt_get_taxonomy($taxonomy = null)
 
 }
 
-function seeding_taxonomies()
+
+
+function lpcpt_build_form($title, $taxonomy, $slug)
 {
-    $taxonomies = [
-        [
-            'name' => 'lpcpt_tema',
-            'items' => [
-                'janeiro',
-                'fevereiro',
-                'julho',
-                'dezembro'
-            ]
-        ],
-        [
-            'name' => 'lpcpt_territorio',
-            'items' => [
-                'para',
-                'sao paulo',
-                'minas gerais',
-                'rondonia',
-                'pernambuco',
-                'acre'
-            ]
-        ],
-    ];
-
-    foreach($taxonomies as $taxonomy) {
-        foreach($taxonomy['items'] as $items) {
-            $has_term = term_exists($items, $taxonomy['name']);
-
-            if(0 === $has_term || null === $has_term) {
-                $result = wp_insert_term(
-                    $items,
-                    $taxonomy['name']
-                );  
-            } 
-        }
-    }
+    require PREFIX_BASE_PATH . 'templates/form-template.php'; 
 }
 
-function build_form($title, $taxonomy, $slug)
-{
-    ?>
-    <section class="p-4 bg-slate-100 text-white flex flex-row justify-between items-center">
-        <div id="<?=$slug?>" class="dropdown-check-list inline-block relative" tabindex="100">
-            <span class="anchor relative cursor-pointer inline-block py-[5px] pr-[200px] pl-[10px] border border-orange-600 text-orange-600">
-                <?= $title ?>
-            </span>
-            <ul class="items absolute z-[9999] w-full bg-slate-100 py-5">
-                <?php foreach(lpcpt_get_taxonomy($taxonomy) as $key => $value): ?>
-                <li class="hover:bg-orange-100">
-                    <div class="flex items-center">
-                        <label for="<?=$slug?>-checkbox-<?=$key?>" class="text-sm font-medium text-orange-600 w-full px-2 cursor-pointer flex flex-row items-center">
-                            <input id="<?=$slug?>-checkbox-<?=$key?>" type="checkbox" value="" class="w-4 h-4 text-orange-600 ring-offset-orange-600 bg-white checked:bg-orange-600 border-orange-600 focus:ring-orange-600 focus:ring-1">
-                            <span class="mx-2">
-                                <?= ucfirst($value) ?>
-                            </span>
-                        </label>
-                    </div>
-                </li>
-                <?php endforeach; ?>
-                <li>
-                    <div id="button_<?=$slug?>" class="relative inline-flex items-center justify-center py-1 px-2 m-2 overflow-hidden text-sm font-medium text-orange-600 border border-orange-600 hover:bg-orange-600 hover:text-white">
-                        <button class="m-0 p-0">Filtrar</button>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <script>
-        let checkList_<?=$slug?> = document.querySelector('#<?=$slug?>');
-        let button_<?=$slug?> = document.querySelector('#button_<?=$slug?>');
-
-        checkList_<?=$slug?>
-            .querySelector('#<?=$slug?> .anchor')
-            .onclick = function(evt) {
-                if (checkList_<?=$slug?>.classList.contains('visible')) {
-                    checkList_<?=$slug?>.classList.remove('visible');
-                } else {
-                    checkList_<?=$slug?>.classList.add('visible');
-                }
-            }
-
-        button_<?=$slug?>
-            .onclick = function(evt) {
-                let checkedCheckboxes = checkList_<?=$slug?>.querySelectorAll('#<?=$slug?> input[type="checkbox"]:checked');
-
-                console.log(checkedCheckboxes);
-            }
-
-    </script>
-    <?php
-}
-
-function select_filter()
+function lpcpt_select_filter()
 {
     $query = $_GET;
 
@@ -192,7 +148,7 @@ function select_filter()
     }
 
     $args = array(
-        'post_type' => 'blog_post',
+        'post_type' => LPCPT_SLUG,
         'posts_per_page' => -1,
         'tax_query' => $taxonomy
     );

@@ -4,11 +4,11 @@ Template Name: Custom Blog Page Template
 */
 
 get_header();
-
+die('Tex');exit;
 ?>
 
 <div id="primary" class="content-area bg-slate-100 p-5">
-    <?php render_header(); ?>
+    <?php lpcpt_render_header(); ?>
 
     <main id="main" class="site-main bg-sky-700 p-4" role="main">
 
@@ -23,11 +23,11 @@ get_header();
 
             <div class="grid grid-cols-3 text-dark">
                 <div class="bg-green-500  p-2 m-2">
-                    <?php build_form('Selecionar Territorio', 'lpcpt_territorio', 'lpcpt_territorio') ?>
+                    <?php lpcpt_build_form('Selecionar Territorio', 'lpcpt_territorio', 'lpcpt_territorio') ?>
                 </div>
 
                 <div class="bg-green-500 p-2 m-2">
-                    <?php build_form('Selecionar Tema', 'lpcpt_tema', 'lpcpt_tema'); ?>
+                    <?php lpcpt_build_form('Selecionar Tema', 'lpcpt_tema', 'lpcpt_tema'); ?>
                 </div>
             </div>
 
