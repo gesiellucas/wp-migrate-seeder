@@ -4,7 +4,7 @@ Template Name: Custom Blog Page Template
 */
 
 get_header();
-die('Tex');exit;
+
 ?>
 
 <div id="primary" class="content-area bg-slate-100 p-5">
@@ -18,7 +18,7 @@ die('Tex');exit;
 
         <section class="blog-categories border border-red-200 bg-red-50 p-2 my-2 flex flex-col">
             <div class="bg-green-500 text-white p-2 m-2">
-                <a href="#">Limpar pesquisa</a>
+                <button id="clean_filter">Limpar pesquisa</button>
             </div>
 
             <div class="grid grid-cols-3 text-dark">
@@ -38,7 +38,7 @@ die('Tex');exit;
             <?php
             
             // The Query
-            $query = new WP_Query( select_filter() );
+            $query = new WP_Query( lpcpt_select_filter() );
 
             // The Loop
             if ( $query->have_posts() ) :

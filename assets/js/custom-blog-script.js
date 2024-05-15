@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
     jQuery('.lpcpt_submit').click(function() {
 
         let currentUrl = window.location.origin + window.location.pathname;
-        let param_id = [];
+        
 
         let fields_checked = jQuery('.lpcpt_input input[type="checkbox"]:checked').map( function() {
             return jQuery(this).data('type').replace('lpcpt_', "") + '[]=' + jQuery(this).data('id') + '&';
@@ -63,31 +63,17 @@ jQuery(document).ready(function() {
         
         let newUrl = currentUrl + '?' + fields_checked;
 
-        console.log(newUrl);
-
         window.location.href = newUrl;
-        return;
-        fields_checked.foreach( function(evt) {
-            console.log(evt);
-        })
+    });
 
-        console.log(fields_checked);return;
-        fields_checked.forEach( function() {
-            let field_id = fields_checked.attr('data-id');
-            let field_type = fields_checked.attr('data-type');
-            let name_param = dataType.replace('lpcpt_', "") + '[]=';
-            param_id += name_param + dataId + '&';
 
-        })
-        
-        
-        
-
-        console.log(fields_checked);
-        // console.log(field_id);
-        // console.log(field_type);
-
-    })
-
+    // Clean Filters
+    jQuery('#clean_filter').click( () => removeQueryParams());
 
 });
+
+function removeQueryParams() {
+    let url = window.location.href;
+    let cleanUrl = url.split('?')[0];
+    window.location.href = cleanUrl;
+}

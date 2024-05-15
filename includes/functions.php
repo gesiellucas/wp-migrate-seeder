@@ -32,14 +32,12 @@ function lpcpt_create_taxonomy()
     foreach (LPCPT_TAXONOMIES as $taxonomy) {
         lpcpt_save_taxonomy($taxonomy[0], $taxonomy[1]);
     }
-
-    // lpcpt_seeding_taxonomies();
 }
 
 function lpcpt_custom_template( $template ) 
 {  
     if ( is_singular( LPCPT_SLUG ) ) {
-        $new_template = plugin_dir_path( __FILE__ ) . 'templates/page-template.php';
+        $new_template = PREFIX_BASE_PATH . 'templates/lpcpt-page-template.php';
         if ( '' !== $new_template ) {
             return $new_template;
         }
@@ -51,16 +49,15 @@ function lpcpt_scripts_styles()
 {
     if ( is_singular( LPCPT_SLUG ) ) {
         wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'custom-blog-tailwind', plugins_url( 'assets/js/tailwind.js', __FILE__ ), null, '0.1.0' );
-        wp_enqueue_script( 'custom-blog-script', plugins_url( 'assets/js/custom-blog-script.js?v=1', __FILE__ ), 'jquery', '0.1.0' );
-        wp_enqueue_style( 'custom-blog-style', plugins_url( 'assets/css/custom-blog-style.css?v=1', __FILE__), null, '0.1.0' );
+        wp_enqueue_script( 'custom-blog-tailwind', PREFIX_BASE_URL . 'assets/js/tailwind.js', null, '0.1.0' );
+        wp_enqueue_script( 'custom-blog-script', PREFIX_BASE_URL . 'assets/js/custom-blog-script.js?v=1', 'jquery', '0.1.0' );
+        wp_enqueue_style( 'custom-blog-style', PREFIX_BASE_URL . 'assets/css/custom-blog-style.css?v=1', null, '0.1.0' );
     }
-    
 }
 
 function lpcpt_render_header()
 {
-    require PREFIX_BASE_PATH . 'templates/header-template.php';
+    require PREFIX_BASE_PATH . 'templates/lpcpt-header-template.php';
 }
 
 function lpcpt_save_taxonomy($singular, $plural)
@@ -118,11 +115,9 @@ function lpcpt_get_taxonomy($taxonomy = null)
 
 }
 
-
-
 function lpcpt_build_form($title, $taxonomy, $slug)
 {
-    require PREFIX_BASE_PATH . 'templates/form-template.php'; 
+    require PREFIX_BASE_PATH . 'templates/lpcpt-form-template.php'; 
 }
 
 function lpcpt_select_filter()
