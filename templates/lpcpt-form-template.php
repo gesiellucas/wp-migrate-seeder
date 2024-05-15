@@ -1,6 +1,6 @@
-<section class="p-4 bg-slate-100 text-white flex flex-row justify-between items-center">
+<section class="py-3 px-2 flex flex-row justify-between items-center">
     <div class="lpcpt_section dropdown-check-list inline-block relative" tabindex="100">
-        <span class="anchor relative cursor-pointer inline-block py-[5px] pr-[200px] pl-[10px] border border-orange-600 text-orange-600">
+        <span class="anchor relative cursor-pointer inline-block py-[5px] pr-[200px] pl-[10px] border-y border-orange-600 text-orange-600">
             <?= $title ?>
         </span>
         <ul class="items absolute z-[9999] w-full bg-slate-100 py-5">

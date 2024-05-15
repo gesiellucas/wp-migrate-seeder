@@ -1,3 +1,7 @@
+:root {
+    --primary-color: #004E4F;
+}
+
 .dropdown-check-list [class*=anchor]:after {
     position: absolute;
     content: "";

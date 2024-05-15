@@ -49,9 +49,9 @@ function lpcpt_scripts_styles()
 {
     if ( is_singular( LPCPT_SLUG ) ) {
         wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'custom-blog-tailwind', PREFIX_BASE_URL . 'assets/js/tailwind.js', null, '0.1.0' );
-        wp_enqueue_script( 'custom-blog-script', PREFIX_BASE_URL . 'assets/js/custom-blog-script.js?v=1', 'jquery', '0.1.0' );
-        wp_enqueue_style( 'custom-blog-style', PREFIX_BASE_URL . 'assets/css/custom-blog-style.css?v=1', null, '0.1.0' );
+        wp_enqueue_script( 'custom-blog-tailwind', PREFIX_BASE_URL . 'assets/js/tailwind.js', null, '0.1.3' );
+        wp_enqueue_script( 'custom-blog-script', PREFIX_BASE_URL . 'assets/js/custom-blog-script.js?v=1', 'jquery', '0.1.3' );
+        wp_enqueue_style( 'custom-blog-style', PREFIX_BASE_URL . 'assets/css/custom-blog-style.css?v=1', null, '0.1.3' );
     }
 }
 
@@ -122,23 +122,41 @@ function lpcpt_build_form($title, $taxonomy, $slug)
 
 function lpcpt_select_filter()
 {
-    $query = $_GET;
-
     $taxonomy['relation'] = 'OR';
 
-    if(isset($query['territorio']))  {
+    if(isset($_GET['territorio'])) {
+        $territorio = $_GET['territorio'];
+
+        if(is_array($territorio)) {
+            $territorio = array_map(function($item){
+                return sanitize_text_field( $item );
+            }, $territorio);
+        } else {
+            $territorio = sanitize_text_field( $item );
+        }
+
         array_push($taxonomy, [
             'taxonomy' => 'lpcpt_territorio',
             'field' => 'slug',
-            'terms' => $query['territorio']
+            'terms' => $territorio
         ]);
     }
 
-    if(isset($query['tema'])) {
+    if(isset($_GET['tema'])) {
+        $tema = $_GET['tema'];
+
+        if(is_array($tema)) {
+            $tema = array_map(function($item){
+                return sanitize_text_field( $item );
+            }, $tema);
+        } else {
+            $tema = sanitize_text_field( $item );
+        }
+
         array_push($taxonomy, [
             'taxonomy' => 'lpcpt_tema',
             'field' => 'slug',
-            'terms' => $query['tema']
+            'terms' => $tema
         ]);
     }
 
