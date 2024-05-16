@@ -55,7 +55,6 @@ jQuery(document).ready(function() {
     jQuery('.lpcpt_submit').click(function() {
 
         let currentUrl = window.location.origin + window.location.pathname;
-        
 
         let fields_checked = jQuery('.lpcpt_input input[type="checkbox"]:checked').map( function() {
             return jQuery(this).data('type').replace('lpcpt_', "") + '[]=' + jQuery(this).data('id') + '&';
@@ -66,10 +65,14 @@ jQuery(document).ready(function() {
         window.location.href = newUrl;
     });
 
-
     // Clean Filters
     jQuery('#clean_filter').click( () => removeQueryParams());
 
+    let el = jQuery('.lpcpt_input input').val();
+    console.log(el)
+
+    // Checked params url
+    checkCheckboxes()
 });
 
 function removeQueryParams() {
@@ -77,3 +80,18 @@ function removeQueryParams() {
     let cleanUrl = url.split('?')[0];
     window.location.href = cleanUrl;
 }
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.getAll(param);
+}
+
+
+function checkCheckboxes() {
+    const itemParams = getQueryParam('territorio[]');
+    if( itemParams.length > 0 ) {
+        itemParams.forEach( (item) => {
+            jQuery('.lpcpt_input input').attr("id");
+        });
+    }
+}
+

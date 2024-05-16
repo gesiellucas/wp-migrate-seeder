@@ -120,6 +120,48 @@ function lpcpt_build_form($title, $taxonomy, $slug)
     require PREFIX_BASE_PATH . 'templates/lpcpt-form-template.php'; 
 }
 
+function lpcpt_remove_prefix($taxonomy)
+{
+    return str_replace('lpcpt_', '', $taxonomy);
+}
+
+function lpctp_check_query_params($taxonomy, $term)
+{
+    switch(lpcpt_remove_prefix($taxonomy)) {
+        case 'territorio':
+            if(isset($_GET['territorio'])) {
+                $territorio = $_GET['territorio'];
+        
+                if(is_array($territorio)) {
+                    $territorio = array_map(function($item) {
+                        return sanitize_text_field( urldecode($item) );
+                    }, $territorio);
+                } else {
+                    $territorio = sanitize_text_field( $item );
+                }
+        
+                echo !in_array($term, $territorio) ?: 'checked="checked"';
+            }
+            break;
+        case 'tema': 
+            if(isset($_GET['tema'])) {
+                $tema = $_GET['tema'];
+        
+                if(is_array($tema)) {
+                    $tema = array_map(function($item) {
+                        return sanitize_text_field( urldecode($item) );
+                    }, $tema);
+                } else {
+                    $tema = sanitize_text_field( urldecode($item) );
+                }
+        
+                echo !in_array($term, $tema) ?: 'checked="checked"';
+            }
+            break;
+        default:
+    }
+}
+
 function lpcpt_select_filter()
 {
     $taxonomy['relation'] = 'OR';

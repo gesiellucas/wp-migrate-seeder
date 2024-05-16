@@ -8,7 +8,7 @@
             <li class="hover:bg-slate-100 ">
                 <div class="flex items-center">
                     <label for="<?=$slug?>-checkbox-<?=$key?>" class="lpcpt_input text-sm font-medium text-orange-600 w-full px-2 cursor-pointer flex flex-row items-center">
-                        <input id="<?=$slug?>-checkbox-<?=$key?>" type="checkbox" value="" data-id="<?=$value?>" data-type="<?=$slug?>" class="w-4 h-4 text-orange-600 ring-offset-orange-600 bg-white checked:bg-orange-600 border-orange-600 focus:ring-orange-600 focus:ring-1">
+                        <input <?= lpctp_check_query_params($taxonomy, $value); ?> id="<?=$slug?>-checkbox-<?=$key?>" type="checkbox" value="<?= $value ?>" data-id="<?=$value?>" data-type="<?=$slug?>" class="w-4 h-4 text-orange-600 ring-offset-orange-600 bg-white checked:bg-orange-600 border-orange-600 focus:ring-orange-600 focus:ring-1">
                         <span class="mx-2 font-['landform']">
                             <?= ucfirst($value) ?>
                         </span>
