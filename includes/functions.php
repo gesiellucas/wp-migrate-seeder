@@ -49,9 +49,9 @@ function lpcpt_scripts_styles()
 {
     if ( is_singular( LPCPT_SLUG ) ) {
         wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'custom-blog-tailwind', PREFIX_BASE_URL . 'assets/js/tailwind.js', null, '0.1.3' );
-        wp_enqueue_script( 'custom-blog-script', PREFIX_BASE_URL . 'assets/js/custom-blog-script.js?v=1', 'jquery', '0.1.3' );
-        wp_enqueue_style( 'custom-blog-style', PREFIX_BASE_URL . 'assets/css/custom-blog-style.css?v=1', null, '0.1.3' );
+        wp_enqueue_script( 'lpcpt-blog-tailwind', PREFIX_BASE_URL . 'assets/js/tailwind.js', null, LPCPT_VERSION );
+        wp_enqueue_script( 'lpcpt-blog-script', PREFIX_BASE_URL . 'assets/js/lpcpt-blog-script.js?v=1', 'jquery', LPCPT_VERSION );
+        wp_enqueue_style( 'lpcpt-blog-style', PREFIX_BASE_URL . 'assets/css/lpcpt-blog-style.css?v=1', null, LPCPT_VERSION );
     }
 }
 

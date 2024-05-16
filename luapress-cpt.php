@@ -23,6 +23,8 @@ define( 'PREFIX_BASE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PREFIX_BASE_URL', plugin_dir_url( __FILE__ ) );
 
 define( 'LPCPT_SLUG', 'article_post');
+define( 'LPCPT_VERSION', '0.1.4');
+
 define( 'LPCPT_TAXONOMIES', array(
     ['Território', 'Territórios'],
     ['Tema', 'Temas']

@@ -1,6 +1,21 @@
 :root {
     --primary-color: #004E4F;
+    --primary-color-50: #004e4f77;
 }
+
+* {
+    transition: 0.03s;
+}
+
+@font-face { 
+    font-family: landform-bold; 
+    src: url('../fonts/landformbold.otf'); 
+} 
+
+@font-face { 
+    font-family: landform; 
+    src: url('../fonts/landformregular.otf'); 
+} 
 
 .dropdown-check-list [class*=anchor]:after {
     position: absolute;
