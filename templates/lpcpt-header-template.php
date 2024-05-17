@@ -1,13 +1,22 @@
-<section class="p-4 bg-slate-500 text-white flex flex-row justify-between items-center">
-    <div class="w-32 h-10 p-2 m-1 bg-slate-900">
-
+<section class="px-20 py-4 flex flex-row justify-between items-center">
+    <div class="p-2 m-1 flex flex-row gap-x-3">
+        <img src="<?= PREFIX_BASE_URL . '/assets/img/logotipo.png' ?>"/>
+        <h3>
+            <span class="text-3xl font-['landform-bold'] font-bold text-[color:var(--second-color)]">Agendas <br/>para o Brasil</span>
+        </h3>
     </div>
 
-    <div class="bg-slate-100">
-        <ul class="flex flex-row gap-3 text-black p-4">
-            <li>Contato</li>
-            <li>Blog</li>
-            <li>Participe</li>
+    <div class="flex items-center">
+        <ul class="flex flex-row gap-x-20 text-black font-['landform'] [&>li]:text-base [&>li]:text-[color:var(--third-color)] [&>li]:uppercase [&>li]:font-bold">
+            <li class="cursor-pointer hover:bg-[color:var(--third-color-50)] p-2">
+                <a href="#">Contato</a>
+            </li>
+            <li class="cursor-pointer hover:bg-[color:var(--third-color-50)] p-2">
+                <a href="#">Blog</a>
+            </li>
+            <li class="cursor-pointer hover:bg-[color:var(--third-color-50)] p-2">
+                <a href="#">Participe</a>
+            </li>
         </ul>
     </div>
 </section>

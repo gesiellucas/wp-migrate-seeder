@@ -5,11 +5,12 @@
  * Version: 1.1
  * Author: LuaPress
  */
+require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+
+
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
-require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
-
 // // Testar
 // require plugin_dir_path( __FILE__ ) . 'vendor/wp-migrate-seeder/luapress/helpers.php' ;
 // require plugin_dir_path( __FILE__ ) . 'vendor/wp-migrate-seeder/luapress/seeder/SeederPost.php';

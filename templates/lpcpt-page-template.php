@@ -10,7 +10,7 @@ get_header();
 <div id="primary" class="content-area bg-white ">
     <?php lpcpt_render_header(); ?>
 
-    <main id="main" class="site-main p-20" role="main">
+    <main id="main" class="site-main px-20 py-10" role="main">
 
         <div class="border-y border-[color:var(--primary-color)] py-2 my-2">
             <h2 class=" w-15 inline-block">
@@ -49,7 +49,9 @@ get_header();
                                     <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"/>
                                 </svg>
                             </span>
-                            <div class="w-full aspect-video bg-slate-500 z-10"></div>
+                            <div class="w-full aspect-video <?= lpcpt_get_thumbnail(get_the_ID()); ?> z-10">
+
+                            </div>
                         </header>
 
                         <section class="entry-header py-1">
@@ -62,7 +64,7 @@ get_header();
 
                         <hr class="border-[color:var(--primary-color-50)]">
 
-                        <div class="entry-content py-4 [&>p]:text-sm font-['landform-bold']">
+                        <div class="entry-content py-4 [&>p]:text-sm font-['landform-bold'] text-dark">
                             <?php the_excerpt(); ?>
                         </div>
 

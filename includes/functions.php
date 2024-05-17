@@ -211,3 +211,28 @@ function lpcpt_select_filter()
     return $args;
 
 }
+
+function lpcpt_get_thumbnail($post_id)
+{
+    global $wpdb;
+
+    // Get the attachment ID of the post thumbnail
+    $thumbnail_id = $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT meta_value FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = '_thumbnail_id'",
+            $post_id
+        )
+    );
+
+    if (!$thumbnail_id) return false;
+
+    // Get the URL of the attachment
+    $thumbnail_url = $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT guid FROM $wpdb->posts WHERE ID = %d",
+            $thumbnail_id
+        )
+    );
+
+    return $thumbnail_url != '' ? 'bg-[url(' . $thumbnail_url .')]' : 'bg-slate-600' ;
+}

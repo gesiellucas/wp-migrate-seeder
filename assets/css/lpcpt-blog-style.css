@@ -1,6 +1,11 @@
 :root {
     --primary-color: #004E4F;
     --primary-color-50: #004e4f77;
+
+    --second-color: #F53200;
+
+    --third-color: #FF9500;
+    --third-color-50: #ff950077;
 }
 
 * {
