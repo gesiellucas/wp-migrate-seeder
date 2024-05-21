@@ -1,6 +1,6 @@
 <section class="py-3 px-2 flex flex-row justify-between items-center">
-    <div class="lpcpt_section dropdown-check-list inline-block relative" tabindex="100">
-        <span class="font-['landform'] anchor relative cursor-pointer inline-block py-[5px] pr-[200px] pl-[10px] border-y border-orange-600 text-orange-600">
+    <div class="w-full lpcpt_section dropdown-check-list inline-block relative" tabindex="100">
+        <span class="block font-['landform'] anchor relative cursor-pointer py-[5px] pr-[200px] pl-[10px] border-y border-orange-600 text-orange-600 font-bolder">
             <?= strtolower($title) ?>
         </span>
         <ul class="items absolute z-[9999] w-full bg-white">

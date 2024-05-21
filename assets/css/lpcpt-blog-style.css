@@ -57,3 +57,28 @@
 .dropdown-check-list.visible .items {
     display: block;
 }
+
+/* Pagination */
+.lpcpt-pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.lpcpt-pagination a,
+.lpcpt-pagination span {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+}
+
+.lpcpt-pagination a:hover {
+    background-color: #f0f0f0;
+}
+
+.lpcpt-pagination .current {
+    background-color: #333;
+    color: #fff;
+}

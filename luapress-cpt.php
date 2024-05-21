@@ -5,21 +5,24 @@
  * Version: 1.1
  * Author: LuaPress
  */
-require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
 
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // // Testar
 // require plugin_dir_path( __FILE__ ) . 'vendor/wp-migrate-seeder/luapress/helpers.php' ;
 // require plugin_dir_path( __FILE__ ) . 'vendor/wp-migrate-seeder/luapress/seeder/SeederPost.php';
 // new SeederPost(12);
 // exit;
 
+require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+require plugin_dir_path( __FILE__ ) . 'includes/functions.php';
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
 define( 'PREFIX_BASE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PREFIX_BASE_URL', plugin_dir_url( __FILE__ ) );
 
@@ -31,7 +34,6 @@ define( 'LPCPT_TAXONOMIES', array(
     ['Tema', 'Temas']
 ));
 
-require plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 
 // Register custom post type
 add_action( 'init', 'lpcpt_create_article_post', 11 );

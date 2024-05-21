@@ -1,4 +1,54 @@
-<?php 
+<?php
+
+use Lpcpt\Posts;
+
+
+function lpcpt_custom_template( $template ) 
+{      
+    if ( is_singular( LPCPT_SLUG ) ) {
+        $new_template = PREFIX_BASE_PATH . 'templates/lpcpt-page-template.php';
+        if ( '' !== $new_template ) {
+            return $new_template;
+        }
+    }
+
+    return $template;
+}
+
+function getPostsArgs()
+{
+    return (new Posts)->getQueryArgs();
+}
+
+function lpcpt_show_posts()
+{
+
+    $query = new WP_Query(  getPostsArgs() );
+
+    if ( $query->have_posts() ) {
+        
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            require PREFIX_BASE_PATH . 'templates/lpcpt-posts-template.php';
+        }
+
+        lpcpt_posts_paginate($query->max_num_pages);
+        
+    } else {
+        echo "<p>Nenhum post encontrado!</p>";
+    }
+
+    wp_reset_postdata();
+
+    
+}
+
+function lpcpt_posts_paginate($total)
+{
+    require PREFIX_BASE_PATH . 'templates/lpcpt-pagination-template.php';
+}
+
+
 
 function lpcpt_create_article_post() 
 {
@@ -32,17 +82,6 @@ function lpcpt_create_taxonomy()
     foreach (LPCPT_TAXONOMIES as $taxonomy) {
         lpcpt_save_taxonomy($taxonomy[0], $taxonomy[1]);
     }
-}
-
-function lpcpt_custom_template( $template ) 
-{  
-    if ( is_singular( LPCPT_SLUG ) ) {
-        $new_template = PREFIX_BASE_PATH . 'templates/lpcpt-page-template.php';
-        if ( '' !== $new_template ) {
-            return $new_template;
-        }
-    }
-    return $template;
 }
 
 function lpcpt_scripts_styles() 
@@ -205,7 +244,7 @@ function lpcpt_select_filter()
     $args = array(
         'post_type' => LPCPT_SLUG,
         'posts_per_page' => -1,
-        'tax_query' => $taxonomy
+        'tax_query' => $taxonomy,
     );
 
     return $args;
