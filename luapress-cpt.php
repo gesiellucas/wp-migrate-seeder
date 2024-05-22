@@ -11,6 +11,14 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // // Testar
+// $faker = Faker\Factory::create();
+// $faker->addProvider(new Bluemmb\Faker\PicsumPhotosProvider($faker));
+// $url = $faker->imageUrl(600, 400); 
+
+// dd($url);
+
+
+// exit;
 // require plugin_dir_path( __FILE__ ) . 'vendor/wp-migrate-seeder/luapress/helpers.php' ;
 // require plugin_dir_path( __FILE__ ) . 'vendor/wp-migrate-seeder/luapress/seeder/SeederPost.php';
 // new SeederPost(12);

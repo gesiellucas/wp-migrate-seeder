@@ -1,6 +1,6 @@
 <?php 
 
-namespace Lpcpt;
+namespace Lpcpt\Classes;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,7 +21,7 @@ class Posts extends Request
 
         $this->setQueryArgs([
             'post_type' => self::TAXONOMY_SLUG,
-            'posts_per_page' => 9,
+            'posts_per_page' => 3,
             'tax_query' => $this->getTaxonomy(),
         ]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-use Lpcpt\Posts;
+use Lpcpt\Classes\Posts;
 
 
 function lpcpt_custom_template( $template ) 
@@ -45,10 +45,18 @@ function lpcpt_show_posts()
 
 function lpcpt_posts_paginate($total)
 {
-    require PREFIX_BASE_PATH . 'templates/lpcpt-pagination-template.php';
+    $base = add_query_arg('pag', '%#%');
+    $paginate = paginate_links(array(
+        'base' => $base,
+        'format' => '',
+        'current' => max(1, get_query_var('pag', 1)),
+        'total' => $total,
+        'add_args'  => false,
+    ));
+
+    echo '<div class="lpcpt-pagination bg-green-500 col-span-3 py-4">' . $paginate . '</div>';
+
 }
-
-
 
 function lpcpt_create_article_post() 
 {
