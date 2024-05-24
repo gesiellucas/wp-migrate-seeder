@@ -43,6 +43,15 @@ function lpcpt_show_posts()
     
 }
 
+function lpcpt_build_form($title, $taxonomy, $slug, $color = null)
+{
+    if($color == null) {
+        $color = 'orange-600 ';
+    }
+    
+    require PREFIX_BASE_PATH . 'templates/lpcpt-form-template.php'; 
+}
+
 function lpcpt_posts_paginate($total)
 {
     $base = add_query_arg('pag', '%#%');
@@ -54,7 +63,7 @@ function lpcpt_posts_paginate($total)
         'add_args'  => false,
     ));
 
-    echo '<div class="lpcpt-pagination bg-green-500 col-span-3 py-4">' . $paginate . '</div>';
+    echo '<div class="lpcpt-pagination bg-green-500 col-span-1 sm:col-span-2 md:col-span-3 py-4">' . $paginate . '</div>';
 
 }
 
@@ -160,11 +169,6 @@ function lpcpt_get_taxonomy($taxonomy = null)
         return $value->name ;
     }, $terms);
 
-}
-
-function lpcpt_build_form($title, $taxonomy, $slug)
-{
-    require PREFIX_BASE_PATH . 'templates/lpcpt-form-template.php'; 
 }
 
 function lpcpt_remove_prefix($taxonomy)
