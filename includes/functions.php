@@ -2,16 +2,20 @@
 
 use Lpcpt\Classes\Posts;
 
-
 function lpcpt_custom_template( $template ) 
 {      
     if ( is_singular( LPCPT_SLUG ) ) {
-        $new_template = PREFIX_BASE_PATH . 'templates/lpcpt-page-template.php';
+        if( isset($_GET['post']) ) {
+            $new_template = PREFIX_BASE_PATH . 'templates/lpcpt-page-opened-template.php';
+        } else {
+            $new_template = PREFIX_BASE_PATH . 'templates/lpcpt-page-template.php';
+        }
+        
         if ( '' !== $new_template ) {
             return $new_template;
         }
     }
-
+    wp_reset_postdata();
     return $template;
 }
 
@@ -20,9 +24,8 @@ function getPostsArgs()
     return (new Posts)->getQueryArgs();
 }
 
-function lpcpt_show_posts()
+function lpcpt_show_posts($id = null)
 {
-
     $query = new WP_Query(  getPostsArgs() );
 
     if ( $query->have_posts() ) {
@@ -39,8 +42,29 @@ function lpcpt_show_posts()
     }
 
     wp_reset_postdata();
+}
 
+function lpcpt_one_post($id)
+{
     
+    $args = array(
+        'p' => $id,
+        'post_type' => 'article_post'
+    );
+    
+    $query = new WP_Query( $args );
+
+    $post = $query->get_posts()[0];
+    // dd($post);
+
+    if(isset($post)) {
+        require PREFIX_BASE_PATH . 'templates/lpcpt-one-page-template.php';
+    }
+
+
+
+    wp_reset_postdata();
+
 }
 
 function lpcpt_build_form($title, $taxonomy, $slug, $color = null)
@@ -65,6 +89,16 @@ function lpcpt_posts_paginate($total)
 
     echo '<div class="lpcpt-pagination bg-green-500 col-span-1 sm:col-span-2 md:col-span-3 py-4">' . $paginate . '</div>';
 
+}
+
+function lpcpt_render_footer()
+{
+    require PREFIX_BASE_PATH . 'templates/lpcpt-footer-template.php';
+}
+
+function lpcpt_get_post_link($id)
+{
+    return '?post&postid=' . $id;
 }
 
 function lpcpt_create_article_post() 
@@ -285,5 +319,5 @@ function lpcpt_get_thumbnail($post_id)
         )
     );
 
-    return $thumbnail_url != '' ? 'bg-[url(' . $thumbnail_url .')]' : 'bg-slate-600' ;
+    return $thumbnail_url != '' ? 'bg-[url(' . $thumbnail_url .')] bg-no-repeat bg-cover' : 'bg-slate-600' ;
 }
