@@ -13,7 +13,6 @@
         "danielstjules/stringy": "^3.1",
         "pristas-peter/wp-graphql-gutenberg": "^0.4.1",
         "symfony/http-foundation": "^7.0",
-        "johnpbloch/wordpress": "^6.5",
         "bluemmb/faker-picsum-photos-provider": "^2.0"
     },
     "require-dev": {
