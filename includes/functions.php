@@ -3,10 +3,9 @@
 use Lpcpt\Classes\Posts;
 
 function lpcpt_custom_template( $template ) 
-{      
-
-    if( is_home() && is_main_query() ) {
-        if( isset($_GET['post']) ) {
+{     
+    if( is_home() && is_main_query()  || is_singular(LPCPT_SLUG) ) {
+        if( isset($_GET['post']) || is_singular(LPCPT_SLUG) ) {
             $new_template = PREFIX_BASE_PATH . 'templates/lpcpt-page-opened-template.php';
         } else {
             $new_template = PREFIX_BASE_PATH . 'templates/lpcpt-page-template.php';
@@ -19,7 +18,6 @@ function lpcpt_custom_template( $template )
         return $template;
     }
 
-    
 }
 
 function getPostsArgs()
@@ -47,9 +45,16 @@ function lpcpt_show_posts($id = null)
     wp_reset_postdata();
 }
 
-function lpcpt_one_post($id)
+function lpcpt_one_post()
 {
     
+    if(isset($_GET['postid'])) {
+        $id = $_GET['postid'];
+    } else {
+        global $post;
+        $id = $post->ID;
+    }
+
     $args = array(
         'p' => $id,
         'post_type' => 'article_post'

@@ -7,14 +7,14 @@
     </div>
 
     <div class="max:sm:hidden sm:flex md:flex sm:items-center">
-        <ul class="flex flex-row sm:gap-x-4 md:gap-x-20 text-black font-['landform'] [&>li]:text-base [&>li]:text-[color:var(--third-color)] [&>li]:uppercase [&>li]:font-bold">
-            <li class="cursor-pointer hover:bg-[color:var(--third-color-50)] p-2">
+        <ul class="flex flex-row sm:gap-x-4 md:gap-x-20 text-black font-['landform'] [&>li]:text-base [&>li]:text-[color:var(--third-color)] [&>li]:uppercase [&>li]:font-bold ">
+            <li class="cursor-pointer hover:text-[color:var(--third-color-800)] p-2">
                 <a href="#">Contato</a>
             </li>
-            <li class="cursor-pointer hover:bg-[color:var(--third-color-50)] p-2">
+            <li class="cursor-pointer hover:text-[color:var(--third-color-800)] p-2">
                 <a href="#">Blog</a>
             </li>
-            <li class="cursor-pointer hover:bg-[color:var(--third-color-50)] p-2">
+            <li class="cursor-pointer hover:text-[color:var(--third-color-800)] p-2">
                 <a href="#">Participe</a>
             </li>
         </ul>
