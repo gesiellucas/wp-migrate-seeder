@@ -54,3 +54,13 @@ add_action( 'wp_enqueue_scripts', 'lpcpt_scripts_styles' );
         
 // Add custom page template for blog
 add_action( 'template_include', 'lpcpt_custom_template' );
+
+
+// Post Meta Data
+add_action( 'add_meta_boxes', 'lpcpt_add_meta_box');
+add_action( 'save_post', 'lpcpt_save_meta_box_data');
+
+add_theme_support('post-thumbnails');
+if (has_post_thumbnail()) {
+    the_post_thumbnail();
+}

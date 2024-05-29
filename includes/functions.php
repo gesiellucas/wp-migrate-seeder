@@ -164,7 +164,7 @@ function lpcpt_save_taxonomy($singular, $plural)
     $labels = array(
         'name'                       => _x( $singular, 'Taxonomy General Name', 'text_domain' ),
         'singular_name'              => _x( $singular, 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( $prefix . $singular, 'text_domain' ),
+        'menu_name'                  => __( $singular, 'text_domain' ),
         'all_items'                  => __( 'Todos ' . $plural, 'text_domain' ),
         'parent_item'                => __( $plural . ' Acima', 'text_domain' ),
         'parent_item_colon'          => __( $singular . ' Acima:', 'text_domain' ),
@@ -182,6 +182,19 @@ function lpcpt_save_taxonomy($singular, $plural)
         'no_terms'                   => __( 'Nada encontrado', 'text_domain' ),
         'items_list'                 => __( 'Lista de ' . $plural, 'text_domain' ),
         'items_list_navigation'      => __( 'Lista de ' . $plural . ' navegação', 'text_domain' ),
+        'featured_image'             => _x('Imagem de Post', 'Altera imagem de destaque', 'text_domain'),
+        'set_featured_image'         => _x('Adicionar imagem destaque', 'Altera imagem de destaque', 'text_domain'),
+        'remove_featured_image'      => _x('Remover imagem de destaque', 'Remove imagem de destaque', 'text_domain'),
+        'use_featured_image'         => _x('Usar como imagem de destaque', 'Usar como imagem de destaque', 'text_domain'),
+        'archives'                   => _x('Mostrar imagens', 'text_domain'),
+        'insert_into_item'           => _x('Inserir na galeria de imagens', 'Inserir na galeria de imagens', 'text_domain'),
+        'uploaded_to_this_item'      => _x('Alterar galeria de imagens', 'Alterar galeria de imagens', 'text_domain'),
+        'filter_items_list'          => _x('Filter portfolios list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'text_domain'),
+        'featured_image'        => _x('Portfolio Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain'),
+        'set_featured_image'    => _x('Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain'),
+        'remove_featured_image' => _x('Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain'),
+        'use_featured_image'    => _x('Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain'),
+         
     );
 
     $args = array(
@@ -192,7 +205,11 @@ function lpcpt_save_taxonomy($singular, $plural)
         'show_admin_column'          => true,
         'show_in_nav_menus'          => true,
         'show_tagcloud'              => true,
-        'query_var'                  => true
+        'query_var'                  => true,
+        'rewrite'            => array('slug' => 'portfolio'),
+        'has_archive'                => true,
+        'supports'                   => array('thumbnail'),
+        'show_in_rest'               => true,
     );
 
     register_taxonomy( remove_accents(strtolower($prefix . $singular)), $post_type, $args );
@@ -327,3 +344,55 @@ function lpcpt_get_thumbnail($post_id)
 
     return $thumbnail_url != '' ? 'bg-[url(' . $thumbnail_url .')] bg-no-repeat bg-cover' : 'bg-slate-600' ;
 }
+
+// BEGIN Post Meta Data
+
+/**
+ * Create the box to add/update the external link
+ *
+ */
+function lpcpt_add_meta_box() {
+    add_meta_box(
+        'lpcpt_meta_box', // ID
+        'Link Externo', // Title
+        'lpcpt_show_meta_box', // Callback function
+        LPCPT_SLUG, // Post type
+        'normal', // Context
+        'high' // Priority
+    );
+}
+
+function lpcpt_show_meta_box($post) {
+    $meta_value = get_post_meta($post->ID, '_lpcpt_meta_key', true);
+    wp_nonce_field(basename(__FILE__), 'lpcpt_meta_box_nonce');
+    ?>
+    <p>
+        <label for="lpcpt-meta-box-url">Link Externo (URL):</label>
+        <input type="url" name="lpcpt-meta-box-url" id="lpcpt-meta-box-url" value="<?php echo esc_attr($meta_value); ?>" size="30" />
+    </p>
+    <?php
+}
+
+function lpcpt_save_meta_box_data($post_id) {
+    if (!isset($_POST['lpcpt_meta_box_nonce']) || !wp_verify_nonce($_POST['lpcpt_meta_box_nonce'], basename(__FILE__))) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (isset($_POST['post_type']) && 'post' == $_POST['post_type']) {
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+    }
+    if (isset($_POST['lpcpt-meta-box-url'])) {
+        update_post_meta($post_id, '_lpcpt_meta_key', esc_url_raw($_POST['lpcpt-meta-box-url']));
+    }
+}
+
+function lpcpt_get_external_link($id)
+{
+    return get_post_meta($id, '_lpcpt_meta_key', true);
+}
+
+// END Post Meta Data
