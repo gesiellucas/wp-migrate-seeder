@@ -1,29 +1,24 @@
 <?php
 /*
+ * LuaPress Custom Post Type
+ *
+ * @package           luapress
+ * @author            Gesiel Lucas
+ * @copyright         2024 Gesiel Lucas
+ * @license           GPL-2.0-or-later
+ *
+ * @wordpress-plugin
  * Plugin Name: LuaPress CPT
  * Description: Creates a custom post type for blog posts with a filterable category form.
- * Version: 1.1
- * Author: LuaPress
+ * Version: 0.2.0
+ * Requires at least: 6.0
+ * Requires PHP: 7.2
+ * Author: Gesiel Lucas
+ * Author URI: https://github.com/gesiellucas
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-// // Testar
-// $faker = Faker\Factory::create();
-// $faker->addProvider(new Bluemmb\Faker\PicsumPhotosProvider($faker));
-// $url = $faker->imageUrl(600, 400); 
-
-// dd($url);
-
-
-// exit;
-// require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
-// require plugin_dir_path( __FILE__ ) . 'vendor/wp-migrate-seeder/luapress/helpers.php' ;
-// require plugin_dir_path( __FILE__ ) . 'vendor/wp-migrate-seeder/luapress/seeder/SeederPost.php';
-// new SeederPost(12);
-// exit;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -33,7 +28,7 @@ define( 'PREFIX_BASE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PREFIX_BASE_URL', plugin_dir_url( __FILE__ ) );
 
 define( 'LPCPT_SLUG', 'article_post');
-define( 'LPCPT_VERSION', '0.1.5');
+define( 'LPCPT_VERSION', '0.2.0');
 
 define( 'LPCPT_TAXONOMIES', array(
     ['Território', 'Territórios'],

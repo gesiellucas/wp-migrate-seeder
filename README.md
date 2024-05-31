@@ -1,2 +1,2 @@
 # luapress-cpt
-A plugin that manner Custom Post Type to a wordpress website.
+A plugin that manage Custom Post Type to wordpress website.

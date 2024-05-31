@@ -14,35 +14,33 @@ class Posts extends Request
 
     public function __construct()
     {
-        $this->params = ['territorio', 'tema', 'pag'];
+        $this->params = ['territorio', 'tema', 'pagina'];
         $this->taxonomy = [];
 
         $this->handleRequest();
 
         $this->setQueryArgs([
             'post_type' => self::TAXONOMY_SLUG,
-            'posts_per_page' => 3,
+            'posts_per_page' => 10,
             'tax_query' => $this->getTaxonomy(),
         ]);
     }
     
     private function handleRequest():void
     {
-        
         foreach($this->getParams() as $param) {
             
-            if( null !== Request::createFromGlobals()->query->has($param) && 'pag' != $param ) {
+            if( null !== Request::createFromGlobals()->query->has($param) && 'pagina' != $param ) {
                 if(! empty( Request::createFromGlobals()->query->all($param) )) {
                     $terms = array_map('sanitize_text_field', Request::createFromGlobals()->query->all($param));
                     $this->setTaxonomy($param, $terms);
                 }
             }
 
-            if(! empty( Request::createFromGlobals()->query->has('pag')) ) {
-                $this->setPagination((int) Request::createFromGlobals()->query->get('pag'));
+            if(! empty( Request::createFromGlobals()->query->has('pagina')) ) {
+                $this->setPagination((int) Request::createFromGlobals()->query->get('pagina'));
             }
         }
-
     }
 
     private function getParams(): array 

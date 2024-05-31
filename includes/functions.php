@@ -47,7 +47,6 @@ function lpcpt_show_posts($id = null)
 
 function lpcpt_one_post()
 {
-    
     if(isset($_GET['postid'])) {
         $id = $_GET['postid'];
     } else {
@@ -63,14 +62,11 @@ function lpcpt_one_post()
     $query = new WP_Query( $args );
 
     $post = $query->get_posts()[0];
-    // dd($post);
 
     if(isset($post)) {
         require PREFIX_BASE_PATH . 'templates/lpcpt-one-page-template.php';
     }
-
-
-
+    
     wp_reset_postdata();
 
 }
@@ -86,16 +82,20 @@ function lpcpt_build_form($title, $taxonomy, $slug, $color = null)
 
 function lpcpt_posts_paginate($total)
 {
-    $base = add_query_arg('pag', '%#%');
+    global $paged;
+
+    $base = add_query_arg('pagina', '%#%');
     $paginate = paginate_links(array(
         'base' => $base,
         'format' => '',
-        'current' => max(1, get_query_var('pag', 1)),
+        'current' => max(1, ($_GET['pagina'] ?? 1) ),
         'total' => $total,
-        'add_args'  => false,
+        'add_args'  => true,
+        'prev_text'          => __('« Anterior'),
+        'next_text'          => __('Próximo »'),
     ));
 
-    echo '<div class="lpcpt-pagination bg-green-500 col-span-1 sm:col-span-2 md:col-span-3 py-4">' . $paginate . '</div>';
+    echo '<div class="lpcpt-pagination col-span-1 sm:col-span-2 md:col-span-3 py-4">' . $paginate . '</div>';
 
 }
 
@@ -111,6 +111,7 @@ function lpcpt_get_post_link($id)
 
 function lpcpt_create_article_post() 
 {
+   
     $labels = array(
         'name' => 'Artigos',
         'singular_name' => 'Artigo',
@@ -130,10 +131,11 @@ function lpcpt_create_article_post()
         'public' => true,
         'has_archive' => true,
         'menu_icon' => 'dashicons-format-aside',
-        'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
+        'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' )
     );
-
+    
     register_post_type( LPCPT_SLUG, $args );
+    
 }
 
 function lpcpt_create_taxonomy()
